@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
 const app = express();
 
 let sess = session({
@@ -12,6 +13,7 @@ let sess = session({
 });
 
 app.use(sess);
+app.use(flash());
 
 const routes = require('./routes');
 
