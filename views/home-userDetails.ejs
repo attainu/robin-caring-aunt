@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Caring Aunt</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css" />
+
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+  <header class="header-bar mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Caring Aunt</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      </div>
+    </nav>
+  </header>
+  <!-- header ends here -->
+
+  <div class="container container--narrow">
+    <div class="text-center">
+      <h2>
+        Hello Miss <strong><%= username %></strong>,
+        I'm Your Aunt!
+      </h2>
+      <p class="lead text-muted">
+        To move further I need some more information from you.
+      </p>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-5 m-auto">
+      <div class="card card-body">
+        <form action="/user-details" method="POST">
+          <div class="form-group">
+            <label for="past_period_date">When did your last period
+              start?</label>
+            <input name="past_period_date" id="past_period_date" class="form-control" type="text"
+              placeholder="DD/MM/YYYY" maxlength="10" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="cycle_in_days">How long is your average
+              cycle?</label>
+            <input name="cycle_in_days" id="cycle_in_days" class="form-control" type="text" maxlength="2" placeholder="28"
+              autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="period_length">What's the length of your
+              period?</label>
+            <input name="period_length" id="period_length" class="form-control" type="text"
+              placeholder="Usually lasts between 4-7 days." autocomplete="off" maxlength="1" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            I'm Done
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer begins -->
+  <footer class="border-top text-center small text-muted py-3">
+    <p class="m-0">
+      Copyright &copy; 2020
+      <a href="/" class="text-muted">Caring Aunt</a>.
+
+      <br />Handmade with Love.<br />All rights
+      reserved.
+    </p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script>
+    $('[data-toggle="tooltip"]').tooltip();
+  </script>
+</body>
+
+</html>
