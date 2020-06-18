@@ -79,7 +79,7 @@ exports.userdtl = (req, res) => {
     req.session.user._id
   );
   user_dtl.details().then(() => {
-    res.send('Details embedded');
+    res.render('home-dashboard');
   }).catch((errors) => {
     res.send(errors);
   });
