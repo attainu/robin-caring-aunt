@@ -5,8 +5,8 @@ const flash = require('connect-flash');
 const app = express();
 
 let sess = session({
-  secret: 'ComeOnItsSecret',
-  store: new sessInDb({client: require('./db')}),
+  secret: process.env.SESS_SECRET,
+  store: new sessInDb({ client: require('./db') }),
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }
