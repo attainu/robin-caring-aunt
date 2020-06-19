@@ -1,10 +1,11 @@
 const user_dtlCollection = require('../db').db().collection('user_dtl');
 const ObjectID = require('mongodb').ObjectID; // Good Practice to store id as ObjectId
 
-let User_dtl = function (data, userid) {
+let User_dtl = function (data, userid,phone_no) {
   this.data = data;
   this.errors = [];
   this.userid = userid;
+  this.phone_no = phone_no;
 };
 
 User_dtl.prototype.cleanUp = function () {
@@ -17,7 +18,8 @@ User_dtl.prototype.cleanUp = function () {
     past_period_date: this.data.past_period_date,
     cycle_in_days: this.data.cycle_in_days,
     period_length: this.data.period_length,
-    user_id: ObjectID(this.userid)
+    user_id: ObjectID(this.userid),
+    phone_no: this.phone_no
   };
 };
 

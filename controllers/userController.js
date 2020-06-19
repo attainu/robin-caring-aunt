@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const User_dtl = require('../models/User_dtl');
 
 exports.mustBeLoggedIn = (req, res, next) => {
   if (req.session.user) {
@@ -18,10 +17,9 @@ exports.login = (req, res) => {
     req.session.user =
     {
       username: user.data.username,
-      _id: user.data._id
     };
     req.session.save(() => {
-      res.redirect('/');
+      res.redirect('/home');
     });
   }).catch((err) => {
     req.flash('errors', err);
@@ -36,8 +34,9 @@ exports.register = (req, res) => {
   user.register().then(() => {
     req.session.user =
     {
+      _id: user.data._id,
       username: user.data.username,
-      _id: user.data._id
+      phone_no: user.data.phone_no
     };
     req.session.save(() => {
       res.redirect('/');
@@ -54,8 +53,10 @@ exports.register = (req, res) => {
 
 exports.home = (req, res) => {
   if (req.session.user) {
+    // if(req.session.user.data.phone_no)
     res.render('home-userDetails',
       {
+        errors: req.flash('errors'),
         username: req.session.user.username
       });
   } else {
@@ -65,22 +66,4 @@ exports.home = (req, res) => {
         regErrors: req.flash('regErrors')
       });
   }
-};
-
-exports.logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/');
-  });
-};
-
-exports.userdtl = (req, res) => {
-  let user_dtl = new User_dtl(
-    req.body,
-    req.session.user._id
-  );
-  user_dtl.details().then(() => {
-    res.render('home-dashboard');
-  }).catch((errors) => {
-    res.send(errors);
-  });
 };
