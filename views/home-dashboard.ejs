@@ -1,138 +1,221 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <title>Title</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="main.css" />
+  </head>
 
-  <!-- Bootstrap CSS -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/journal/bootstrap.min.css">
-</head>
+  <body>
+    <style>
+      .dropdown:hover > .dropdown-menu {
+        display: block;
+      }
+    </style>
+    <header>
+      <nav
+        class="navbar navbar-expand-lg navbar-dark bg-primary"
+      >
+        <a class="navbar-brand" href="#"
+          >Caring Aunt</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarColor01"
+          aria-controls="navbarColor01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span
+            class="navbar-toggler-icon"
+          ></span>
+        </button>
 
-<body>
-
-  <style>
-    .dropdown:hover>.dropdown-menu {
-      display: block
-    }
-  </style>
-  <header class="header-bar mb-3" ;>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Caring Aunt</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Have A Doubt?
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <a class="dropdown-item" href="#">Blog 1</a>
-                    <a class="dropdown-item" href="#">Blog 2</a>
-                    <a class="dropdown-item" href="#">Blog 3</a>
-                    <a class="dropdown-item" href="#">Blog 4</a>
-                    <a class="dropdown-item" href="#">Blog 5</a>
-                    <a class="dropdown-item" href="#">Blog 6</a>
-                    <a class="dropdown-item" href="#">Blog 7</a>
-                    <a class="dropdown-item" href="#">Blog 8</a>
-                    <a class="dropdown-item" href="#">Blog 9</a>
-                    <a class="dropdown-item" href="#">Blog 10</a>
-                  </div>
+              <div class="dropdown">
+                <button
+                  class="btn btn-primary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenu1"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Have A Doubt?
+                </button>
+                <div
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenu1"
+                >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 1</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 2</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 3</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 4</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 5</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 6</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 7</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 8</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 9</a
+                  >
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    >Blog 10</a
+                  >
                 </div>
-              </li>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a href="#" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="
-                                  width: 32px;
-                                  height: 32px;
-                                  border-radius: 16px;
-                                " src="http://cdn.onlinewebfonts.com/svg/img_550781.png" /></a>
-          </li>
-            <form action="/logout" method="POST" class="d-inline">
-            <button class="btn btn-sm btn-danger">
+              </div>
+            </li>
+          </ul>
+          <form
+            class="form-inline my-2 my-lg-0"
+            action="/logout"
+            method="POST"
+          >
+            <a href="#" class="mr-2"
+              ><img
+                title="My Profile"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                style="
+                  width: 32px;
+                  height: 32px;
+                  border-radius: 16px;
+                "
+                src="http://cdn.onlinewebfonts.com/svg/img_550781.png"
+            /></a>
+            <button
+              class="btn btn-secondary my-2 my-sm-0"
+            >
               Sign Out
             </button>
-            </form>
-        </ul>
-      </div>
-    </nav>
-  </header>
-  <!-- header ends here -->
-<div class="container-fluid">
-  <div class="row">
-    <div class="col col-lg-3">
-
-    </div>
-    <div class="col col-lg-6">
-      <div class="maindiv">
-        <div class="border_div">
-          <div class="suppress_head">
-            <b>Hello Username</b>
-          </div>
-          <div style="padding: 10px">
-            <div class="work_div">
-              <div class="to_clear">
+          </form>
+        </div>
+      </nav>
+    </header>
+    <!-- header ends here -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col col-lg-3"></div>
+        <div class="col col-lg-6">
+          <div class="maindiv">
+            <div class="border_div">
+              <div class="suppress_head">
+                <b>Hello Username</b>
               </div>
-              .
-              <br />
-              User Email &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp-<%=  %>
+              <div style="padding: 10px;">
+                <div class="work_div">
+                  <div class="to_clear"></div>
+                  .
+                  <br />
+                  User Email &nbsp &nbsp &nbsp
+                  &nbsp &nbsp &nbsp &nbsp &nbsp
+                  &nbsp &nbsp-<%= %>
 
-              <br />
-              User Phone Number &nbsp &nbsp-
+                  <br />
+                  User Phone Number &nbsp &nbsp -
 
-              <br />
-              Past Period Date &nbsp &nbsp &nbsp &nbsp &nbsp-
+                  <br />
+                  Past Period Date &nbsp &nbsp
+                  &nbsp &nbsp &nbsp-
 
-              <br />
-              Period Cycle &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp -
+                  <br />
+                  Period Cycle &nbsp &nbsp &nbsp
+                  &nbsp &nbsp &nbsp &nbsp &nbsp -
 
-              <br />
-              Length Of Your Period -
-              <br />
-              .
+                  <br />
+                  Length Of Your Period -
+                  <br />
+                  .
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div class="col col-lg-3"></div>
       </div>
     </div>
-    <div class="col col-lg-3">
-    </div>
-  </div>
-</div>
 
-  <!-- footer begins -->
-  <footer class="border-top text-center small text-muted py-3">
-    <p class="m-0">
-      Copyright &copy; 2020
-      <a href="/" class="text-muted">Caring Aunt</a>.
+    <!-- footer begins -->
+    <footer
+      class="border-top text-center small text-muted py-3"
+    >
+      <p class="m-0">
+        Copyright &copy; 2020
+        <a href="/" class="text-muted"
+          >Caring Aunt</a
+        >.
 
-      <br />Handmade with Love.<br />All rights
-      reserved.
-    </p>
-  </footer>
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-</body>
-
+        <br />Handmade with Love.<br />All rights
+        reserved.
+      </p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
