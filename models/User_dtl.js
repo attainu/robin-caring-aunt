@@ -21,6 +21,22 @@ User_dtl.prototype.cleanUp = function () {
     user_id: ObjectID(this.userid),
     phone_no: this.phone_no
   };
+
+  // Adding notify date to user_dtls data
+  Date.prototype.addDays = function(days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+
+  const dateArray = this.data.past_period_date.split('-') 
+  const intDateArray = dateArray.map(value => Number(value)) 
+  
+  const date = new Date(intDateArray[0], intDateArray[1] - 1, intDateArray[2]) // Date 2020, 6, 15
+  const newDate = date.addDays(Number(this.data.cycle_in_days) - 1)
+  const notifyDate = `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()}`
+
+  this.data.notifyDate = notifyDate
 };
 
 User_dtl.prototype.validate = function () {
