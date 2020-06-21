@@ -14,12 +14,14 @@ exports.insertUserDetail = (req, res) => {
   });
 };
 
-exports.viewHome = (req, res) => {
-  res.render('home-dashboard');
+exports.viewHome = async (req, res) => {
+  try {
+    let userInfo = await User_dtl.viewHome();
+    res.render('userHome', { userInfo: userInfo });
+    // console.log('----------------------m here ---------------------');
+    // console.log(userInfo);
+  } catch{
+    res.render('404');
+  }
 };
 
-exports.logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/');
-  });
-};

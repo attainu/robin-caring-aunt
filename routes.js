@@ -7,16 +7,17 @@ const user_dtlController = require('./controllers/user_dtlController');
 routes.get('/', userController.home);
 routes.post('/register', userController.register);
 routes.post('/login', userController.login);
+routes.post('/logout', userController.logout);
 
 // User Details Route
 routes.post('/user-details',
-userController.mustBeLoggedIn,
-user_dtlController.insertUserDetail
+  userController.mustBeLoggedIn,
+  user_dtlController.insertUserDetail
 );
 routes.get('/home',
-userController.mustBeLoggedIn,
-user_dtlController.viewHome
+  userController.registeredUser,
+  userController.mustBeLoggedIn,
+  user_dtlController.viewHome
 );
-routes.post('/logout', user_dtlController.logout);
 
 module.exports = routes;

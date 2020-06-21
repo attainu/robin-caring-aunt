@@ -28,7 +28,7 @@
       <nav
         class="navbar navbar-expand-lg navbar-dark bg-primary"
       >
-        <a class="navbar-brand" href="#"
+        <a class="navbar-brand" href="/"
           >Caring Aunt</a
         >
         <button
@@ -48,73 +48,12 @@
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <div class="dropdown">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenu1"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Have A Doubt?
-                </button>
-                <div
-                  class="dropdown-menu"
-                  aria-labelledby="dropdownMenu1"
-                >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 1</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 2</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 3</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 4</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 5</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 6</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 7</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 8</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 9</a
-                  >
-                  <a
-                    class="dropdown-item"
-                    href="#"
-                    >Blog 10</a
-                  >
-                </div>
-              </div>
+              <a class="nav-link" href="#"
+                >Home
+                <span class="sr-only"
+                  >(current)</span
+                ></a
+              >
             </li>
           </ul>
           <form
@@ -122,18 +61,53 @@
             action="/logout"
             method="POST"
           >
-            <a href="#" class="mr-2"
-              ><img
-                title="My Profile"
-                data-toggle="tooltip"
-                data-placement="bottom"
-                style="
-                  width: 32px;
-                  height: 32px;
-                  border-radius: 16px;
-                "
-                src="http://cdn.onlinewebfonts.com/svg/img_550781.png"
-            /></a>
+            <div class="dropdown">
+              <button
+                class="btn btn-primary dropdown-toggle"
+                type="button"
+                id="dropdownMenu1"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Have A Doubt?
+              </button>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="dropdownMenu1"
+              >
+                <a class="dropdown-item" href="#"
+                  >Blog 1</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 2</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 3</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 4</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 5</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 6</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 7</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 8</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 9</a
+                >
+                <a class="dropdown-item" href="#"
+                  >Blog 10</a
+                >
+              </div>
+            </div>
             <button
               class="btn btn-secondary my-2 my-sm-0"
             >
@@ -151,32 +125,46 @@
           <div class="maindiv">
             <div class="border_div">
               <div class="suppress_head">
-                <b>Hello Username</b>
+                <h3></h3>
+                  Hello <%=
+                  userInfo.user_id.username %>
+                </h3>
               </div>
               <div style="padding: 10px;">
                 <div class="work_div">
                   <div class="to_clear"></div>
-                  .
                   <br />
                   User Email &nbsp &nbsp &nbsp
                   &nbsp &nbsp &nbsp &nbsp &nbsp
-                  &nbsp &nbsp-<%= %>
-
-                  <br />
-                  User Phone Number &nbsp &nbsp -
-
-                  <br />
-                  Past Period Date &nbsp &nbsp
-                  &nbsp &nbsp &nbsp-
-
-                  <br />
+                  &nbsp &nbsp &nbsp &nbsp<%=
+                  userInfo.user_id.email %>
+                  <hr />
+                  User Phone Number &nbsp &nbsp
+                  &nbsp &nbsp <%=
+                  userInfo.phone_no %>
+                  <hr />
                   Period Cycle &nbsp &nbsp &nbsp
-                  &nbsp &nbsp &nbsp &nbsp &nbsp -
+                  &nbsp &nbsp &nbsp &nbsp &nbsp
+                  &nbsp &nbsp &nbsp<%=
+                  userInfo.cycle_in_days %>
 
-                  <br />
-                  Length Of Your Period -
-                  <br />
-                  .
+                  <hr />
+                  Length Of Your Period &nbsp
+                  &nbsp &nbsp &nbsp<%=
+                  userInfo.period_length %>
+                  <hr />
+                  Past Period Date &nbsp &nbsp
+                  &nbsp &nbsp &nbsp &nbsp &nbsp
+                  &nbsp<%=
+                  userInfo.past_period_date %>
+                  <hr />
+                  Future Period Date &nbsp &nbsp
+                  &nbsp &nbsp &nbsp &nbsp <%=
+                  userInfo.notifyDate.slice(0,-1)
+                  +
+                  (parseInt(userInfo.notifyDate.slice(-1))+1)
+                  %>
+                  <hr />
                 </div>
               </div>
             </div>
