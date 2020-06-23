@@ -53,7 +53,10 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    avatar: {
+        type: Buffer
+    }
 });
 
 userSchema.virtual('menstrualDtls', {
@@ -77,10 +80,11 @@ userSchema.methods.toJSON = function() {
     delete userObject.__v
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
     return userObject
 }
 
-// attaching a method to user schema
+// attaching a method to user schema  (User)
 // statics -> Attaching the method to model, called as Model methods
 userSchema.statics.findByCredentials = async (email, password) => {
     // we can use this method through 'User' model

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = new express.Router();
 const Menstrual = require('../models/menstrualModel')
-const auth = require('../middleware/auth');
-const dateCalc = require('../middleware/dateCalc')
+const auth = require('../middlewares/auth');
+const dateCalc = require('../middlewares/dateCalc')
 const control = require('../controllers/menstrualController')
 
 

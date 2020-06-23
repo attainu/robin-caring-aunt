@@ -5,13 +5,13 @@ const Menstrual = require('../models/menstrualModel')
 const createNotifyDate = require('./date')
 
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 10 * * *', async () => {
     console.log("Running Cron Job");
 
     try {
         menstDtl = await Menstrual.find()
         const date = new Date()
-        const dateStr = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        // const dateStr = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
         const todaysDate = date.toLocaleString().split(',')[0]
 
         for (let user of menstDtl) {

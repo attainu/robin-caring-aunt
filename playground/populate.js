@@ -7,11 +7,11 @@
 // }
 // main()
 
-const User = require('./models/userModel')
+// const User = require('./models/userModel')
 
-const main = async () => {
-    data = await User.findById("5eefb2416878ab1f08857e94")
-    await data.populate('menstrualDtls').execPopulate()
-    console.log(data.menstrualDtls)
-}
-main()
+// const main = async () => {
+//     data = await User.findById("5eefb2416878ab1f08857e94")
+//     await data.populate('menstrualDtls').execPopulate()    
+//     console.log(data.menstrualDtls)
+// }
+// main()

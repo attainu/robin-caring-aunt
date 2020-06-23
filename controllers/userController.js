@@ -1,4 +1,6 @@
 const User = require('../models/userModel');
+const sharp = require('sharp')
+
 
 const control = {
 
@@ -51,7 +53,7 @@ const control = {
 
     updateUserProfile: async (req, res) => {
         const updates = Object.keys(req.body)
-        const allowedUpdates = ['name', 'email', 'password', 'age'];
+        const allowedUpdates = ['name', 'email', 'password', 'age', 'contact'];
         const isvalidOperation = updates.every(update => allowedUpdates.includes(update));
         if (!isvalidOperation) {
             return res.status(400).send({ error: 'Invalid updates' })
@@ -75,6 +77,38 @@ const control = {
             res.send(req.user)
         } catch (err) {
             res.status(500).send(err)
+        }
+    },
+
+    uploadAvatar: async (req, res) => {
+        const buffer = await sharp (req.file.buffer).resize({ width:250, height:250 }).png().toBuffer()
+        req.user.avatar = buffer
+        await req.user.save()
+        res.send()
+    },
+
+    multerErrHandler: (err, req, res, next) => {
+        res.status(400).send({ error: err.message })
+    },
+
+    deleteAvatar: async (req, res) => {
+        req.user.avatar = undefined
+        await req.user.save()
+        res.send()
+    },
+
+    getAvatar: async (req, res) => {
+        try {
+            const user = await User.findById(req.params.id)
+
+            if (!user || !user.avatar) {
+                throw new Error()
+            }
+            res.set('Content-Type', 'image/png')
+            res.send(user.avatar)
+
+        } catch(e) {
+            res.status(400).send()
         }
     }
 }

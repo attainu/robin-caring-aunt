@@ -1,6 +1,7 @@
 const express = require('express')
 const router = new express.Router();
-const auth = require('../middleware/auth')
+const auth = require('../middlewares/auth')
+const upload = require('../utils/multerConfig');
 const control = require('../controllers/userController')
 
 /* 
@@ -19,6 +20,12 @@ router.post('/users/logout', auth, control.logout);
 // Log out from every device
 router.post('/users/logoutAll', auth, control.logoutAll);
 
+// upload Profile Picture
+router.post('/users/me/avatar', auth, upload.single('avatar'), control.uploadAvatar, control.multerErrHandler);
+
+// Get Avatar
+router.get('/users/avatar/:id', control.getAvatar)
+
 // User profile
 router.get('/users/me', auth , control.userProfile);
 
@@ -27,5 +34,10 @@ router.patch('/users/me', auth, control.updateUserProfile);
 
 // Delete user profile
 router.delete('/users/me', auth, control.deleteUserProfile)
+
+// Delete profile picture
+router.delete('/users/me/avatar', auth, control.deleteAvatar)
+
+
 
 module.exports = router;
