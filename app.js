@@ -1,32 +1,16 @@
 const express = require('express');
-const session = require('express-session');
-const sessInDb = require('connect-mongo')(session);
-const flash = require('connect-flash');
+const userRouter = require('./routers/user');
+const menstRouter = require('./routers/menstrual');
+require('dotenv').config();
+require('./db/mongoose');
+// require('./utils/sms')
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-let sess = session({
-  secret: process.env.SESS_SECRET,
-  store: new sessInDb({ client: require('./db') }),
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }
-});
-
-app.use(sess);
-app.use(flash());
-
-const routes = require('./routes');
-
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(express.static('public'));
+app.use(userRouter);
+app.use(menstRouter);
 
-// setting up view engine
-app.set('views', 'views');
-app.set('view engine', 'ejs');
-
-
-app.use('/', routes);
-
-module.exports = app;
+app.listen(PORT, () => console.log(`Server is up on port ${PORT}`));

@@ -1,86 +1,82 @@
-const User = require('../models/User');
+const User = require('../models/userModel');
 
-exports.mustBeLoggedIn = (req, res, next) => {
-  if (req.session.user) {
-    next();
-  } else {
-    req.flash('errors', 'You must be logged in to perform this action.');
-    req.session.save(() => {
-      res.redirect('/');
-    });
-  }
-};
+const control = {
 
-exports.registeredUser = (req, res, next) => {
-  if (req.session.user && !req.session.user.phone_no) {
-    next();
-  } else {
-    // req.session.user.phone_no = null;
-    res.redirect('/home');
-  }
-};
+    signup: async (req, res) => {
+        const user = new User (req.body);
+        try {
+            await user.save();
+            const token = await user.generateAuthToken();
+            res.status(201).send({ user, token });
+        } catch (e) {
+            res.status(400).send();
+        }
+    },
 
-exports.register = (req, res) => {
-  let user = new User(req.body);
-  user.register().then(() => {
-    req.session.user =
-    {
-      _id: user.data._id,
-      username: user.data.username,
-      phone_no: user.data.phone_no
-    };
-    req.session.save(() => {
-      res.redirect('/');
-    });
-  }).catch((regErrors) => {
-    regErrors.forEach((error) => {
-      req.flash('regErrors', error);
-    });
-    req.session.save(() => {
-      res.redirect('/');
-    });
-  });
-};
+    login: async (req, res) => {
+        try {
+            const user = await User.findByCredentials(req.body.email, req.body.password)
+            const token = await user.generateAuthToken()
+            res.send({ user, token })
+        } catch (e) {
+            res.status(400).send(e)
+        }
+    },
 
-exports.login = (req, res) => {
-  let user = new User(req.body);
-  user.login().then((result) => {
-    req.session.user =
-    {
-      _id: user.data._id,
-      username: user.data.username,
-    };
-    req.session.save(() => {
-      res.redirect('/home');
-    });
-  }).catch((err) => {
-    req.flash('errors', err);
-    req.session.save(() => {
-      res.redirect('/');
-    });
-  });
-};
+    logout: async (req, res) => {
+        try {
+            req.user.tokens = req.user.tokens.filter((objToken) => { 
+                return objToken.token !== req.token // [{id, token}, {id, token}..]
+            })
+            await req.user.save()       
+            res.send()
+        } catch (e) {
+            res.status(500).send({e})
+        }
+    },
 
-exports.logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/');
-  });
-};
+    logoutAll: async (req, res) => {
+        try {
+            req.user.tokens = []
+            await req.user.save()
+            res.send()
+        } catch (e) {
+            res.status(500).send()
+        }
+    },
 
-exports.home = (req, res) => {
-  if (req.session.user && req.session.user.phone_no) {
-    res.render('userDetails',
-      {
-        errors: req.flash('errors'),
-        username: req.session.user.username
-      });
-  } else if (req.session.user) {
-    res.render('userHome');
-  } else {
-    res.render('guestUser',
-      {
-        errors: req.flash('errors'),
-        regErrors: req.flash('regErrors')
-      });
-  }
-};
+    userProfile: async (req, res) => {
+        res.send(req.user);
+    },
+
+    updateUserProfile: async (req, res) => {
+        const updates = Object.keys(req.body)
+        const allowedUpdates = ['name', 'email', 'password', 'age'];
+        const isvalidOperation = updates.every(update => allowedUpdates.includes(update));
+        if (!isvalidOperation) {
+            return res.status(400).send({ error: 'Invalid updates' })
+        }
+        try {
+            /* certain mongoose query bypasses middleware (like findByIdAndUpdate())
+            and perfoms operations directly on database and that is why we use special
+            operation like runvalidator */
+            updates.forEach(update => req.user[update] = req.body[update])
+            await req.user.save()
+            res.send(req.user)
+    
+        } catch (e) {
+            res.status(400).send() // validation failure
+        }
+    },
+
+    deleteUserProfile: async (req, res) => {
+        try {
+            await req.user.remove() //can also use findbyidanddelete
+            res.send(req.user)
+        } catch (err) {
+            res.status(500).send(err)
+        }
+    }
+}
+
+module.exports = control;

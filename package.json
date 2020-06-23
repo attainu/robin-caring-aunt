@@ -1,25 +1,25 @@
 {
-  "name": "caringaunt",
+  "name": "robin-caring-aunt",
   "version": "1.0.0",
-  "description": "A handy tool for females",
+  "description": "Menstrual cycle tracing app",
   "main": "app.js",
   "scripts": {
-    "watch": "nodemon db",
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Bhavleen Singh & Karan Negi",
+  "author": "Bhavleen Singh and Karan Negi",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "connect-flash": "^0.1.1",
-    "connect-mongo": "^3.2.0",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.3",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "mongodb": "^3.5.9",
-    "nodemon": "^2.0.4",
-    "uuid": "^8.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.19",
+    "node-cron": "^2.0.3",
+    "twilio": "^3.46.0",
     "validator": "^13.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
