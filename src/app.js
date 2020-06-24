@@ -3,11 +3,10 @@ const userRouter = require('./routers/user');
 const menstRouter = require('./routers/menstrual');
 require('dotenv').config();
 require('./db/mongoose');
-// require('./utils/sms')
-require('./utils/email')
+require('./utils/sms');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.use(express.json());
 

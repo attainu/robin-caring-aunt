@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 try {
-    mongoose.connect(process.env.CONNECTION, { 
+    mongoose.connect(process.env.CONNECTION_URL, { 
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
+        useFindAndModify: false
     }, () => console.log("Database Connected"));    
 } catch (error) { 
-    console.log("could not connect");    
-}
+    console.log("Could not connect");    
+} 

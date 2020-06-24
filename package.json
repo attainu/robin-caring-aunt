@@ -1,11 +1,10 @@
 {
   "name": "robin-caring-aunt",
   "version": "1.0.0",
-  "description": "Menstrual cycle tracing app",
+  "description": "Menstrual cycle tracking app",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/app.js"
   },
   "author": "Bhavleen Singh and Karan Negi",
   "license": "ISC",
@@ -18,11 +17,15 @@
     "mongoose": "^5.9.19",
     "multer": "^1.4.2",
     "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.10",
     "sharp": "^0.25.4",
     "twilio": "^3.46.0",
     "validator": "^13.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
     "nodemon": "^2.0.4"
   }
 }

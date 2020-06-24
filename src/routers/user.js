@@ -1,9 +1,9 @@
 const express = require('express')
-const router = new express.Router();
 const auth = require('../middlewares/auth')
 const upload = require('../utils/multerConfig');
 const control = require('../controllers/userController')
 
+const router = express.Router();
 /* 
 PUBLIC ROUTES WERE LOGIN AND SIGNUP ROUTE
 */

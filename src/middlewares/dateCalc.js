@@ -1,5 +1,3 @@
-
-
 const dateCalc = (req, res, next) => {
 
     if (req.body.pastPeriodDate) {

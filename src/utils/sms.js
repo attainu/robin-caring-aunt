@@ -1,9 +1,11 @@
-
 const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN)
 const cron = require("node-cron");
 const Menstrual = require('../models/menstrualModel')
 const createNotifyDate = require('./date')
 
+/*
+I'M USING MY TWILIO SIGNIN CREDENTIALS FOR TESTING PLEASE CHANGE IT IF YOU ARE USING YOURS
+*/
 
 cron.schedule('0 10 * * *', async () => {
     console.log("Running Cron Job");

@@ -1,11 +1,13 @@
 const User = require('../models/userModel');
 const sharp = require('sharp')
+const { sendWelcomeEmail, sendCancellationEmail } = require('../utils/email')
 
 
 const control = {
 
     signup: async (req, res) => {
         const user = new User (req.body);
+        sendWelcomeEmail(user.email, user.name)
         try {
             await user.save();
             const token = await user.generateAuthToken();
@@ -74,9 +76,11 @@ const control = {
     deleteUserProfile: async (req, res) => {
         try {
             await req.user.remove() //can also use findbyidanddelete
+            sendCancellationEmail(req.user.email, req.user.name)
             res.send(req.user)
         } catch (err) {
-            res.status(500).send(err)
+            console.log(err)
+            res.status(500).send()
         }
     },
 

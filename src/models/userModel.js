@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const Menstrual = require('./menstrualModel')
+const Menstrual = require('./menstrualModel');
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true, 
+        trim: true,
         lowercase: true,
         validate(value) {
             if (!validator.isEmail(value)) {
@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         validate(value) {
             if (value.toLowerCase().includes('password')) {
-                throw new Error('Password shouldn\'t be "password".')
+                throw new Error('Password shouldn\'t be "password".');
             }
         }
     },
@@ -63,57 +63,57 @@ userSchema.virtual('menstrualDtls', {
     ref: 'MenstrualDtl',
     localField: '_id',
     foreignField: 'owner'
-})
+});
 
 // .methods -> methods that available on the instances, called as Instances methods
-userSchema.methods.generateAuthToken = async function() {
+userSchema.methods.generateAuthToken = async function () {
     const user = this;
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.SIGNED_KEY)
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
     user.tokens = user.tokens.concat({ token });
-    await user.save()
-    return token
-}
+    await user.save();
+    return token;
+};
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
     const user = this;
-    const userObject = user.toObject()
-    delete userObject.__v
-    delete userObject.password
-    delete userObject.tokens
-    delete userObject.avatar
-    return userObject
-}
+    const userObject = user.toObject();
+    delete userObject.__v;
+    delete userObject.password;
+    delete userObject.tokens;
+    delete userObject.avatar;
+    return userObject;
+};
 
 // attaching a method to user schema  (User)
 // statics -> Attaching the method to model, called as Model methods
 userSchema.statics.findByCredentials = async (email, password) => {
     // we can use this method through 'User' model
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
-        throw new Error('Unable to login')
+        throw new Error('Unable to login');
     }
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        throw new Error('Unable to login')
+        throw new Error('Unable to login');
     }
-    return user
-}
+    return user;
+};
 
 // mongoose middleware
 // Hash the plain text password before saving
 userSchema.pre('save', async function (next) {
-    const user = this; 
+    const user = this;
     if (user.isModified('password')) { // it will be true while signup and when password gets modified
         user.password = await bcrypt.hash(user.password, Number(process.env.ROUND));
     }
-    next()
-})
+    next();
+});
 
 userSchema.pre('remove', async function (next) {
-    const user = this
-    await Menstrual.findOneAndRemove({ owner: user._id })
-    next()
-})
+    const user = this;
+    await Menstrual.findOneAndRemove({ owner: user._id });
+    next();
+});
 
 // User Model
 const User = mongoose.model('User', userSchema);
