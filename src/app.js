@@ -1,11 +1,9 @@
-import express from 'express';
-import userRouter from './routers/user';
-import menstRouter from './routers/menstrual';
-
-import 'dotenv/config';
-
-import './db/mongoose';
-import './utils/sms';
+const express = require('express');
+const userRouter = require('./routers/user');
+const menstRouter = require('./routers/menstrual');
+require('dotenv').config();
+require('./db/mongoose');
+require('./utils/sms')
 
 const app = express();
 const PORT = process.env.PORT;

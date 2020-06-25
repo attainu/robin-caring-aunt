@@ -1,13 +1,15 @@
-import User from '../models/userModel';
-import sharp from 'sharp';
-import { sendWelcomeEmail, sendCancellationEmail } from '../utils/email';
+const User = require('../models/userModel');
+const sharp = require('sharp')
+const createNotifyDate = require('../utils/dateCalc')
+const { sendWelcomeEmail, sendCancellationEmail } = require('../utils/email')
 
 
 const control = {
 
     signup: async (req, res) => {
-        const user = new User(req.body);
-        sendWelcomeEmail(user.email, user.name);
+        const user = new User (req.body);
+        sendWelcomeEmail(user.email, user.name)
+
         try {
             await user.save();
             const token = await user.generateAuthToken();
@@ -19,33 +21,33 @@ const control = {
 
     login: async (req, res) => {
         try {
-            const user = await User.findByCredentials(req.body.email, req.body.password);
-            const token = await user.generateAuthToken();
-            res.send({ user, token });
+            const user = await User.findByCredentials(req.body.email, req.body.password)
+            const token = await user.generateAuthToken()
+            res.send({ user, token })
         } catch (e) {
-            res.status(400).send(e);
+            res.status(400).send(e)
         }
     },
 
     logout: async (req, res) => {
         try {
-            req.user.tokens = req.user.tokens.filter((objToken) => {
-                return objToken.token !== req.token; // [{id, token}, {id, token}..]
-            });
-            await req.user.save();
-            res.send();
+            req.user.tokens = req.user.tokens.filter((objToken) => { 
+                return objToken.token !== req.token // [{id, token}, {id, token}..]
+            })
+            await req.user.save()       
+            res.send()
         } catch (e) {
-            res.status(500).send({ e });
+            res.status(500).send({e})
         }
     },
 
     logoutAll: async (req, res) => {
         try {
-            req.user.tokens = [];
-            await req.user.save();
-            res.send();
+            req.user.tokens = []
+            await req.user.save()
+            res.send()
         } catch (e) {
-            res.status(500).send();
+            res.status(500).send()
         }
     },
 
@@ -54,67 +56,66 @@ const control = {
     },
 
     updateUserProfile: async (req, res) => {
-        const updates = Object.keys(req.body);
+        const updates = Object.keys(req.body)
         const allowedUpdates = ['name', 'email', 'password', 'age', 'contact'];
         const isvalidOperation = updates.every(update => allowedUpdates.includes(update));
         if (!isvalidOperation) {
-            return res.status(400).send({ error: 'Invalid updates' });
+            return res.status(400).send({ error: 'Invalid updates' })
         }
         try {
             /* certain mongoose query bypasses middleware (like findByIdAndUpdate())
             and perfoms operations directly on database and that is why we use special
             operation like runvalidator */
-            updates.forEach(update => req.user[update] = req.body[update]);
-            await req.user.save();
-            res.send(req.user);
-
+            updates.forEach(update => req.user[update] = req.body[update])
+            await req.user.save()
+            res.send(req.user)
+    
         } catch (e) {
-            res.status(400).send(); // validation failure
+            res.status(400).send() // validation failure
         }
     },
 
     deleteUserProfile: async (req, res) => {
         try {
-            await req.user.remove(); //can also use findbyidanddelete
-            sendCancellationEmail(req.user.email, req.user.name);
-            res.send(req.user);
+            await req.user.remove() //can also use findbyidanddelete
+            sendCancellationEmail(req.user.email, req.user.name)
+            res.send(req.user)
         } catch (err) {
-            console.log(err);
-            res.status(500).send();
+            res.status(500).send()
         }
     },
 
     uploadAvatar: async (req, res) => {
-        const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
-        req.user.avatar = buffer;
-        await req.user.save();
-        res.send();
+        const buffer = await sharp (req.file.buffer).resize({ width:250, height:250 }).png().toBuffer()
+        req.user.avatar = buffer
+        await req.user.save()
+        res.send()
     },
 
     multerErrHandler: (err, req, res, next) => {
-        res.status(400).send({ error: err.message });
+        res.status(400).send({ error: err.message })
     },
 
     deleteAvatar: async (req, res) => {
-        req.user.avatar = undefined;
-        await req.user.save();
-        res.send();
+        req.user.avatar = undefined
+        await req.user.save()
+        res.send()
     },
 
     getAvatar: async (req, res) => {
         try {
-            const user = await User.findById(req.params.id);
+            const user = await User.findById(req.user._id)
 
             if (!user || !user.avatar) {
-                throw new Error();
+                throw new Error()
             }
-            res.set('Content-Type', 'image/png');
-            res.send(user.avatar);
+            res.set('Content-Type', 'image/png')
+            res.send(user.avatar)
 
-        } catch (e) {
-            res.status(400).send();
+        } catch(e) {
+            res.status(400).send({ ERR: 'NOT FOUND' })
         }
     }
-};
+}
 
-export default control;
+module.exports = control;
