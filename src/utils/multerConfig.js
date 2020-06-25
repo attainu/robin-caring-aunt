@@ -1,15 +1,15 @@
-const multer = require('multer');
+import multer from 'multer';
 
 const upload = multer({
     limits: {
         fileSize: 1000000
     },
-    fileFilter (req, file, cb) {
+    fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-            return cb(new Error('File must be of image type'))
+            return cb(new Error('File must be of image type'));
         }
-        cb(undefined, true)
+        cb(undefined, true);
     }
-})
+});
 
-module.exports = upload
+export default upload;

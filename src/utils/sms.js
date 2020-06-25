@@ -1,7 +1,7 @@
-const client = require('twilio')(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN)
-const cron = require("node-cron");
-const Menstrual = require('../models/menstrualModel')
-const createNotifyDate = require('./date')
+import client from `twilio/${process.env.ACCOUNT_SID},${process.env.AUTH_TOKEN}`
+import cron from 'node-cron'
+import Menstrual from '../models/menstrualModel'
+import createNotifyDate from './date'
 
 /*
 I'M USING MY TWILIO SIGNIN CREDENTIALS FOR TESTING PLEASE CHANGE IT IF YOU ARE USING YOURS

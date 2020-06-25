@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const menstDtlSchema = new mongoose.Schema ({
-    pastPeriodDate : {
+const menstDtlSchema = new mongoose.Schema({
+    pastPeriodDate: {
         type: Date,
         required: true
     },
@@ -21,7 +21,7 @@ const menstDtlSchema = new mongoose.Schema ({
         min: 3,
         max: 8
     },
-    
+
     notifyDate: {
         type: Date,
         required: true
@@ -31,20 +31,18 @@ const menstDtlSchema = new mongoose.Schema ({
         type: mongoose.Schema.Types.ObjectId,
         unique: true,
         required: true,
-        ref : 'User'
+        ref: 'User'
     }
+});
 
-})
-
-menstDtlSchema.methods.toJSON = function() {
+menstDtlSchema.methods.toJSON = function () {
     const user = this;
-    const userObject = user.toObject()
-    userObject.pastPeriodDate = `${userObject.pastPeriodDate.getFullYear()}-${userObject.pastPeriodDate.getMonth()+1}-${userObject.pastPeriodDate.getDate()}`
-    delete userObject.owner
-    delete userObject.notifyDate
-    delete userObject.__v
-    return userObject
-}
+    const userObject = user.toObject();
+    userObject.pastPeriodDate = `${userObject.pastPeriodDate.getFullYear()}-${userObject.pastPeriodDate.getMonth() + 1}-${userObject.pastPeriodDate.getDate()}`;
+    delete userObject.owner;
+    delete userObject.notifyDate;
+    delete userObject.__v;
+    return userObject;
+};
 
-const Menstrual = mongoose.model('MenstrualDtl', menstDtlSchema);
-module.exports = Menstrual;
+export default mongoose.model('MenstrualDtl', menstDtlSchema);
