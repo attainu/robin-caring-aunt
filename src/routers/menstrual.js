@@ -1,16 +1,21 @@
 const express = require('express');
 const router = new express.Router();
 const auth = require('../middlewares/auth');
-const control = require('../controllers/menstrualController')
+const { check, validationResult } = require('express-validator');
+const { create, getData, update, remove } = require('../controllers/menstrualController/control');
 
 
-router.post('/menst', auth, control.create)
+router.post('/menst', [
+  check('pastPeriodDate', 'In Past-Period-Date only numeric values are allowed').isNumeric(),
+  check('menstrualCycleLength', 'In Menstrual-Cycle-Length only numeric values are allowed').isNumeric(),
+  check('periodLength', 'In Period-Length only numeric values are allowed').isNumeric()
+], auth, create);
 
-router.get('/menst', auth, control.getData)
+router.get('/menst', auth, getData);
 
-router.patch('/menst', auth, control.update)
+router.patch('/menst', auth, update);
 
-router.delete('/menst', auth, control.remove)
+router.delete('/menst', auth, remove);
 
 
 module.exports = router;
