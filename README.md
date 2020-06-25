@@ -8,5 +8,5 @@ npm test
 
 ## Creators
 
-- Karan Negi
-- Bhavleen Singh
+- Karan Singh Negi
+- Bhavleen Singh Manaktala
