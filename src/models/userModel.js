@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const Menstrual = require('./menstrualModel');
+import mongoose from 'mongoose';
+import validator from 'validator';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import Menstrual from './menstrualModel';
 
 // User Schema  
 const userSchema = new mongoose.Schema({
@@ -117,4 +117,4 @@ userSchema.pre('remove', async function (next) {
 
 // User Model
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+export default User;

@@ -1,10 +1,11 @@
-const Menstrual = require('../models/menstrualModel');
-const createNotifyDate = require('../utils/dateCalc');
-const { check, validationResult } = require('express-validator');
+import Menstrual from '../models/menstrualModel';
+import createNotifyDate from '../utils/dateCalc';
+import { check, validationResult } from 'express-validator';
 
 const control = {
 
     create: async (req, res) => {
+
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -27,7 +28,9 @@ const control = {
             await menstDtl.save();
             res.status(201).send(menstDtl);
         } catch (e) {
-            res.status(400).send();
+            res.status(400).json({
+                error: `Error: ${e}`
+            });
         }
     },
 
@@ -71,7 +74,6 @@ const control = {
             res.send(menstDtl);
 
         } catch (err) {
-            console.log(err);
             res.status(400).send(err);
         }
     },

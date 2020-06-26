@@ -1,11 +1,12 @@
-const express = require('express');
-const auth = require('../middlewares/auth');
-const upload = require('../utils/multerConfig');
-const { check, validationResult } = require('express-validator');
-const { signup, login, logout, logoutAll,
+import express from 'express';
+import auth from '../middlewares/auth';
+import upload from '../utils/multerConfig';
+import { check, validationResult } from 'express-validator';
+import {
+  signup, login, logout, logoutAll,
   userProfile, getAvatar, deleteAvatar, deleteUserProfile,
   updateUserProfile, multerErrHandler, uploadAvatar
-} = require('../controllers/userController');
+} from '../controllers/userController';
 
 const router = express.Router();
 /* 
@@ -50,4 +51,4 @@ router.delete('/users/me', auth, deleteUserProfile);
 // Delete profile picture
 router.delete('/users/me/avatar', auth, deleteAvatar);
 
-module.exports = router;
+export default router;

@@ -1,8 +1,8 @@
-const sharp = require('sharp');
-const User = require('../models/userModel');
-const createNotifyDate = require('../utils/dateCalc');
-const { check, validationResult } = require('express-validator');
-const { sendWelcomeEmail, sendCancellationEmail } = require('../utils/email');
+import sharp from 'sharp';
+import User from '../models/userModel';
+import createNotifyDate from '../utils/dateCalc';
+import { check, validationResult } from 'express-validator';
+import { sendWelcomeEmail, sendCancellationEmail } from '../utils/email';
 
 
 const control = {
@@ -17,20 +17,22 @@ const control = {
             });
         }
 
-        const user = new User(req.body);
-        sendWelcomeEmail(user.email, user.name);
-
         try {
+            const user = new User(req.body);
+            // sendWelcomeEmail(user.email, user.name);
+
             await user.save();
             const token = await user.generateAuthToken();
             res.status(201).send({ user, token });
         } catch (e) {
-            res.status(400).send();
+            res.status(400).json({
+                error: `Error: ${e}`
+            });
         }
     },
 
     login: async (req, res) => {
-        const errors = validationResults(req);
+        const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
             return res.status(422).json({
@@ -43,7 +45,9 @@ const control = {
             const token = await user.generateAuthToken();
             res.send({ user, token });
         } catch (e) {
-            res.status(400).send(e);
+            res.status(400).json({
+                error: `Error: ${e}`
+            });
         }
     },
 
@@ -55,7 +59,9 @@ const control = {
             await req.user.save();
             res.send();
         } catch (e) {
-            res.status(500).send({ e });
+            res.status(500).json({
+                error: `Error: ${e}`
+            });
         }
     },
 
@@ -65,7 +71,9 @@ const control = {
             await req.user.save();
             res.send();
         } catch (e) {
-            res.status(500).send();
+            res.status(500).json({
+                error: `Error: ${e}`
+            });
         }
     },
 
@@ -89,17 +97,21 @@ const control = {
             res.send(req.user);
 
         } catch (e) {
-            res.status(400).send(); // validation failure
+            res.status(400).json({   // validation failure
+                error: `Error: ${e}`
+            });
         }
     },
 
     deleteUserProfile: async (req, res) => {
         try {
             await req.user.remove(); //can also use findbyidanddelete
-            sendCancellationEmail(req.user.email, req.user.name);
+            // sendCancellationEmail(req.user.email, req.user.name);
             res.send(req.user);
         } catch (err) {
-            res.status(500).send();
+            res.status(500).json({
+                error: `Error: ${e}`
+            });
         }
     },
 
@@ -107,7 +119,7 @@ const control = {
         const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
         req.user.avatar = buffer;
         await req.user.save();
-        res.send();
+        res.status(201).json({ msg: 'Profile pic uploaded Successfully' });
     },
 
     multerErrHandler: (err, req, res, next) => {
@@ -117,7 +129,7 @@ const control = {
     deleteAvatar: async (req, res) => {
         req.user.avatar = undefined;
         await req.user.save();
-        res.send();
+        res.status(200).json({ msg: 'Profile pic removed Successfully' });
     },
 
     getAvatar: async (req, res) => {
@@ -125,13 +137,13 @@ const control = {
             const user = await User.findById(req.user._id);
 
             if (!user || !user.avatar) {
-                throw new Error();
+                return res.status(404).json({ error: 'You haven\'t uploaded any Profile Pic.' });
             }
             res.set('Content-Type', 'image/png');
             res.send(user.avatar);
 
         } catch (e) {
-            res.status(400).send({ ERR: 'NOT FOUND' });
+            res.status(404).send();
         }
     }
 };
