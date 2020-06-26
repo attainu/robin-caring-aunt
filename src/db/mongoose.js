@@ -8,5 +8,5 @@ try {
         useFindAndModify: false
     }, () => console.log("Database Connected"));
 } catch (error) {
-    console.log("Could not connect");
+    console.log(error);
 } 

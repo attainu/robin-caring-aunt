@@ -26,7 +26,10 @@ const control = {
 
         try {
             await menstDtl.save();
-            res.status(201).send(menstDtl);
+            res.status(201).json({
+                'Menstrual Detail': menstDtl,
+                'Result': 'Created Successfully' 
+            });
         } catch (e) {
             res.status(400).json({
                 error: `Error: ${e}`
@@ -71,8 +74,10 @@ const control = {
 
             menstDtl.notifyDate = notifyDate;
             await menstDtl.save();
-            res.send(menstDtl);
-
+            res.json({
+                'Menstrual Detail': menstDtl,
+                'Result': 'Updated Successfully' 
+            })
         } catch (err) {
             res.status(400).send(err);
         }
@@ -85,9 +90,9 @@ const control = {
             if (!menstDtl) {
                 return res.status(404).send();
             }
-            res.send({
-                deletedData: menstDtl,
-                result: "successfully deleted"
+            res.json({
+                'Menstrual Detail': menstDtl,
+                Result: "Successfully Deleted"
             });
         } catch (err) {
             res.status(500).send(err);

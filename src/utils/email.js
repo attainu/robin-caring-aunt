@@ -43,6 +43,5 @@ const sendCancellationEmail = (email, name) => {
     }
 };
 
-module.exports = { sendWelcomeEmail, sendCancellationEmail };;
+module.exports = { sendWelcomeEmail, sendCancellationEmail };
 
-// let us know what we can do better 

@@ -39,7 +39,8 @@ const menstDtlSchema = new mongoose.Schema({
 menstDtlSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
-    userObject.pastPeriodDate = `${userObject.pastPeriodDate.getFullYear()}-${userObject.pastPeriodDate.getMonth() + 1}-${userObject.pastPeriodDate.getDate()}`;
+    userObject.pastPeriodDate =  userObject.pastPeriodDate.toDateString();
+    delete userObject._id
     delete userObject.owner;
     delete userObject.notifyDate;
     delete userObject.__v;

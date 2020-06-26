@@ -4,6 +4,7 @@ import menstRouter from './routers/menstrual';
 import 'dotenv/config';
 import './db/mongoose'
 import './utils/sms'
+import './utils/sms2'
 
 const app = express();
 const PORT = process.env.PORT;
