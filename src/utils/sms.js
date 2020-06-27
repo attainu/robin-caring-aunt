@@ -3,7 +3,7 @@ import cron from "node-cron";
 import Menstrual from '../models/menstrualModel';
 import createNotifyDate from './dateCalc';
 
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 10 * * *', async () => {
 
     const date = new Date();
     const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;

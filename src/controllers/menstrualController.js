@@ -1,19 +1,9 @@
 import Menstrual from '../models/menstrualModel';
 import createNotifyDate from '../utils/dateCalc';
-import { check, validationResult } from 'express-validator';
 
 const control = {
 
     create: async (req, res) => {
-
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(422).json({
-                error: errors.array()[0].msg
-            });
-        }
-
 
         const date = req.body.pastPeriodDate;
         const length = req.body.menstrualCycleLength;
@@ -40,11 +30,16 @@ const control = {
     getData: async (req, res) => {
 
         try {
-            const msnstDtl = await Menstrual.findOne({ owner: req.user._id });
+            const menstDtl = await Menstrual.findOne({ owner: req.user._id });
             // Alternate methd > await req.user.populate('tasks').execPopulate()
-            res.send(msnstDtl);
+            if(!menstDtl) {
+                return res.json({ error: 'Create menstrual details first'})
+            }
+            res.send(menstDtl);
         } catch (e) {
-            res.status(500).send();
+            res.status(500).json({
+                error: `${e}`
+            });
         }
     },
 
@@ -60,7 +55,7 @@ const control = {
 
             const menstDtl = await Menstrual.findOne({ owner: req.user._id });
             if (!menstDtl) {
-                return res.status(404).send();
+                return res.status(404).json({ error: 'Create menstrual details first'});
             }
             updates.forEach(update => menstDtl[update] = req.body[update]);
 
@@ -79,7 +74,9 @@ const control = {
                 'Result': 'Updated Successfully' 
             })
         } catch (err) {
-            res.status(400).send(err);
+            res.status(400).json({
+                error: `${err}`
+            });
         }
     },
 
@@ -95,8 +92,20 @@ const control = {
                 Result: "Successfully Deleted"
             });
         } catch (err) {
-            res.status(500).send(err);
+            res.status(500).json({error: 'Server Error'});
         }
+    },
+
+    stats: async (req, res) => {
+        try {
+            const user = await Menstrual.findOne({ owner: req.user._id })
+            if (!user) {
+                return res.json({ Error: 'Update menstrual details first'})
+            }
+            res.json(user.generateStats())
+        } catch (err) {
+            res.status(500).json({error: 'Server Error'});
+        }   
     }
 
 };

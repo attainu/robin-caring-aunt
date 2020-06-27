@@ -1,27 +1,22 @@
-import sharp from 'sharp';
 import User from '../models/userModel';
-import { check, validationResult } from 'express-validator';
 import { sendWelcomeEmail, sendCancellationEmail } from '../utils/email';
-import Menstrual from '../models/menstrualModel';
-import dateCalc from '../utils/dateCalc'
-
 
 const control = {
 
     signup: async (req, res) => {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(422).json({  // 422 -> Unprocessable Entity
-                error: errors.array()[0].msg
-            });
-        }
 
         try {
             const user = new User(req.body);
-            sendWelcomeEmail(user.email, user.name);
+            let emailExists = await User.findOne({ email: user.email });
+            if (emailExists) {
+                return res.status(406).json({
+                    error: 'An account with that email address already exists. Please login to continue.'
+                });
+            }
 
             await user.save();
+            sendWelcomeEmail(user.email, user.name);
+
             const token = await user.generateAuthToken();
             res.status(201).json({
                 user,
@@ -36,26 +31,15 @@ const control = {
     },
 
     login: async (req, res) => {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(422).json({
-                error: errors.array()[0].msg
-            });
-        }
 
         try {
             const user = await User.findByCredentials(req.body.email, req.body.password);
             const token = await user.generateAuthToken();
-            res.json({ 
-                user,
-                token,
-                Result: 'Login Successfully'
+            res.json({ user, token,
+                Result: 'Login Success'
             });
         } catch (e) {
-            res.status(400).json({
-                error: `Error: ${e}`
-            });
+            res.status(400).send(e);
         }
     },
 
@@ -70,7 +54,7 @@ const control = {
             });
         } catch (e) {
             res.status(500).json({
-                error: `Error: ${e}`
+                error: 'Server Error'
             });
         }
     },
@@ -84,7 +68,7 @@ const control = {
             });
         } catch (e) {
             res.status(500).json({
-                error: `Error: ${e}`
+                error: 'Server Error'
             });
         }
     },
@@ -123,66 +107,12 @@ const control = {
         try {
             await req.user.remove(); //can also use findbyidanddelete
             sendCancellationEmail(req.user.email, req.user.name);
-            res.json({
-                profile: req.user,
-                Result: 'Sign Out Successfully'
-            });
+            res.status(200).json({ message: 'User Deleted' });
         } catch (err) {
             res.status(500).json({
-                error: `Error: ${e}`
+                error: 'Server Error'
             });
         }
-    },
-
-    uploadAvatar: async (req, res) => {
-        const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer();
-        req.user.avatar = buffer;
-        await req.user.save();
-        res.status(201).json({ Result: 'Profile pic uploaded Successfully' });
-    },
-
-    multerErrHandler: (err, req, res, next) => {
-        res.status(400).send({ error: err.message });
-    },
-
-    deleteAvatar: async (req, res) => {
-        if (!req.user.avatar) {
-            return res.status(200).json({ msg: 'No profile pic found' });
-        }
-        req.user.avatar = undefined;
-        await req.user.save();
-        res.status(200).json({ Result: 'Profile pic removed Successfully' });
-    },
-
-    getAvatar: async (req, res) => {
-        try {
-            const user = await User.findById(req.user._id);
-
-            if (!user || !user.avatar) {
-                return res.status(404).json({ error: 'Not Found' });
-            }
-            res.set('Content-Type', 'image/png');
-            res.send(user.avatar);
-
-        } catch (e) {
-            res.status(404).send();
-        }
-    },
-
-    stats: async (req, res) => {
-        try {
-            const user = await Menstrual.findOne({ owner: req.user._id })
-            const halfCycleLength = Math.round(user.menstrualCycleLength / 2)
-            const ovulationDate = dateCalc(user.pastPeriodDate, halfCycleLength)
-            res.status(200).json({
-                'Currennt cycle start date': user.pastPeriodDate.toDateString(),
-                'Current cycle end date': user.notifyDate.toDateString(),
-                'Next cycle and period begins from': dateCalc(user.notifyDate, 2).toDateString(),
-                'Ovulation phase': ovulationDate.toDateString()
-            })
-        } catch (e) {
-            res.status(400).send(e)
-        }   
     }
 };
 

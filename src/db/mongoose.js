@@ -6,7 +6,7 @@ try {
         useUnifiedTopology: true,
         useCreateIndex: true,
         useFindAndModify: false
-    }, () => console.log("Database Connected"));
+    }, () => console.log("DB CONNECTED"));
 } catch (error) {
-    console.log(error);
+    console.log("Error connecting to database: ", error);
 } 

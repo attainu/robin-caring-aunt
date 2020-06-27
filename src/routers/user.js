@@ -1,12 +1,13 @@
 import express from 'express';
 import auth from '../middlewares/auth';
-import upload from '../utils/multerConfig';
-import { check, validationResult } from 'express-validator';
-import { signup, login, logout, logoutAll, 
-         stats, userProfile, getAvatar,
-         deleteAvatar, deleteUserProfile,
-         updateUserProfile, multerErrHandler,
-         uploadAvatar } from '../controllers/userController';
+import upload from '../config/multer';
+import { signUpValidate, logInValidate } from '../middlewares/validate'
+
+import { signup, login, logout, logoutAll, userProfile, deleteUserProfile,
+         updateUserProfile } from '../controllers/userController';
+
+import { getAvatar, deleteAvatar, multerErrHandler, 
+         uploadAvatar } from '../controllers/avatarController';         
 
 const router = express.Router();
 
@@ -15,18 +16,10 @@ LOGIN AND SIGNUP ARE PUBLIC ROUTES
 */
 
 // Sign Up  
-router.post('/users', [
-  check('name', 'Name should be atleast 4 char').isLength({ min: 4 }),
-  check('email', 'Email should be correct format').isEmail(),
-  check('password', 'Password should be atleast 8 char').isLength({ min: 8 }),
-  check('contact', 'Contact Number should be 10 digits').isMobilePhone()
-], signup);
+router.post('/users', signUpValidate, signup);
 
 // Log In 
-router.post('/users/login', [
-  check('email', 'Email is required').isEmail(),
-  check('password', 'Password should be atleast 8 char').isLength({ min: 8 }),
-], login);
+router.post('/users/login', logInValidate, login);
 
 // Log Out
 router.post('/users/logout', auth, logout);
@@ -42,9 +35,6 @@ router.get('/users/me/avatar', auth, getAvatar);
 
 // User profile
 router.get('/users/me', auth, userProfile);
-
-// Get route to view cycle stats
-router.get('/users/me/cycle-stats', auth, stats);
 
 // Update profile
 router.patch('/users/me', auth, updateUserProfile);
