@@ -6,7 +6,7 @@
     "test": "babel-watch ./src/app",
     "start": "npm run build && node ./dist/app",
     "build": "npm run clean && npm run babel-build",
-    "babel-build": "babel -d ./dist ./src -s",
+    "babel-build": "babel -d ./dist ./src -s --copy-files",
     "clean": "rimraf ./dist && mkdir dist"
   },
   "engines": {
