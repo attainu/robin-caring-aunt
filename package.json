@@ -10,7 +10,9 @@
     "babel-build": "babel -d ./dist ./src -s",
     "clean": "rm -rf ./dist && mkdir dist"
   },
-  "engine": "{node:14.x}",
+  "engines": {
+    "node": "14.x"
+  },
   "author": "Bhavleen Singh and Karan Negi",
   "license": "ISC",
   "dependencies": {
