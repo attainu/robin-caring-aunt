@@ -17,6 +17,9 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.send(`<h1 style="color:red">WELCOME TO CARING-AUNT</h1>`)
+})
 app.use(userRouter);
 app.use(menstRouter);
 app.use(blogRouter);
