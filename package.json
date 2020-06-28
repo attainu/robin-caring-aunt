@@ -2,13 +2,12 @@
   "name": "robin-caring-aunt",
   "version": "1.0.0",
   "description": "Menstrual cycle tracking app",
-  "main": "src/app.js",
   "scripts": {
     "test": "babel-watch ./src/app",
     "start": "npm run build && node ./dist/app",
     "build": "npm run clean && npm run babel-build",
     "babel-build": "babel -d ./dist ./src -s",
-    "clean": "rm -rf ./dist && mkdir dist"
+    "clean": "rimraf ./dist && mkdir dist"
   },
   "engines": {
     "node": "14.x"
